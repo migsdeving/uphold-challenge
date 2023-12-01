@@ -1,6 +1,5 @@
 import SDK from "@uphold/uphold-sdk-javascript";
 import { useEffect, useState } from "react";
-import "./App.css";
 import { CurrencyInput } from "./components/CurrencyInput";
 import { ExchangeRateCard } from "./components/ExchangeRateCard";
 

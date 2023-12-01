@@ -36,6 +36,7 @@ export const ExchangeRateCard = ({
           className={`${isImageLoading ? "hidden" : "block"}`}
           src={`/assets/${ticker}.png`}
           onError={handleImageError}
+          alt={ticker}
           onLoad={() => {
             setIsImageLoading(false);
           }}
