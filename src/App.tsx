@@ -3,11 +3,12 @@ import { ChangeEvent, useEffect, useState } from "react";
 import "./App.css";
 import { ExchangeRateCard } from "./components/ExchangeRateCard";
 
-type TickerData = {
+type CurrencyData = {
   ask: string;
   bid: string;
   currency: string;
   pair: string;
+  convertTo: string;
 };
 
 const sdk = new SDK({
@@ -21,38 +22,49 @@ function App() {
   const [inputAmount, setInputAmount] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("AXL");
   const [supportedCurrencies, setSupportedCurrencies] = useState<string[]>([]);
-  const [tickerData, setTickerData] = useState<TickerData[]>([]);
+  const [tickerData, setTickerData] = useState<CurrencyData[]>([]);
 
-  const filterAndSetCurrencies = (filteredTickers: TickerData[]) => {
-    console.log("setting currencies");
+  const filterAndSetCurrencies = (filteredTickers: CurrencyData[]) => {
     //inconsistent pair format from the api requires me to clean the data
-    const supportedCurrencies = filteredTickers
-      .map((tickerData) => tickerData.pair)
-      .map((item) =>
-        item.replace(`-${selectedCurrency}`, "").replace(selectedCurrency, "")
-      );
+    const supportedCurrencies = filteredTickers.map(
+      (tickerData) => tickerData.convertTo
+    );
 
     setSupportedCurrencies(supportedCurrencies);
   };
 
   const fetchPairs = async () => {
-    const allTickers: TickerData[] = await sdk.getTicker(selectedCurrency);
+    const cachedCurrencyData = localStorage.getItem(selectedCurrency);
 
-    // filtering to get only one-way rates (selected-anything)
-    const filteredTickers = allTickers.filter(
-      (ticker) => ticker.currency === selectedCurrency
+    if (cachedCurrencyData) {
+      const currencyData: CurrencyData[] = JSON.parse(cachedCurrencyData);
+      setTickerData(currencyData);
+    }
+
+    const newCurrencyData: CurrencyData[] = await sdk.getTicker(
+      selectedCurrency
     );
+    // filtering to get only one-way rates (selected-anything)
+    const filteredRates = newCurrencyData
+      .filter((ticker) => ticker.currency === selectedCurrency)
+      .map((ticker) => ({
+        ...ticker,
+        convertTo: ticker.pair
+          .replace(`-${selectedCurrency}`, "")
+          .replace(selectedCurrency, ""),
+      }));
+    if (!cachedCurrencyData) setTickerData(filteredRates);
 
-    if (supportedCurrencies.length === 0)
-      filterAndSetCurrencies(filteredTickers);
+    localStorage.setItem(selectedCurrency, JSON.stringify(filteredRates));
 
-    setTickerData(filteredTickers);
+    if (supportedCurrencies.length === 0) filterAndSetCurrencies(filteredRates);
   };
 
   useEffect(() => {
     fetchPairs();
   }, [selectedCurrency]);
 
+  //debouncing currency amount
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setCurrencyAmount(parseFloat(inputAmount));
@@ -71,9 +83,7 @@ function App() {
             value={inputAmount}
             onChange={handleAmountChange}
             type="number"
-            style={{
-              margin: 30,
-            }}
+            className="m-7"
           />
           <select
             value={selectedCurrency}
@@ -89,19 +99,23 @@ function App() {
             ))}
           </select>
         </div>
+
         <div className="flex justify-center ">
-          <div className="w-1/3 flex flex-col h-[70vh] overflow-auto bg-slate-200 p-5">
-            {tickerData.map((currency) => (
-              <ExchangeRateCard
-                ticker={currency.pair
-                  .replace(`-${selectedCurrency}`, "")
-                  .replace(selectedCurrency, "")}
-                ask={parseFloat(currency.ask)}
-                bid={parseFloat(currency.bid)}
-                currencyAmount={currencyAmount}
-              />
-            ))}
-          </div>
+          {tickerData.length > 0 && !!currencyAmount ? (
+            <div className="w-1/3 flex flex-col h-[70vh] overflow-auto bg-slate-200 p-5">
+              {tickerData.map((currency, index) => (
+                <ExchangeRateCard
+                  key={index}
+                  ticker={currency.convertTo}
+                  ask={parseFloat(currency.ask)}
+                  bid={parseFloat(currency.bid)}
+                  currencyAmount={currencyAmount}
+                />
+              ))}
+            </div>
+          ) : (
+            "Enter an amount to check the rates."
+          )}
         </div>
       </div>
     </div>
