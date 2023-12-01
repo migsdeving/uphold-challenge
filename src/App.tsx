@@ -2,6 +2,7 @@ import SDK from "@uphold/uphold-sdk-javascript";
 import { useEffect, useState } from "react";
 import { CurrencyInput } from "./components/CurrencyInput";
 import { ExchangeRateCard } from "./components/ExchangeRateCard";
+import { Navbar } from "./components/Navbar";
 
 type CurrencyData = {
   ask: string;
@@ -19,7 +20,7 @@ const sdk = new SDK({
 
 function App() {
   const [currencyAmount, setCurrencyAmount] = useState(0);
-  const [selectedCurrency, setSelectedCurrency] = useState("AXL");
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [supportedCurrencies, setSupportedCurrencies] = useState<string[]>([]);
   const [tickerData, setTickerData] = useState<CurrencyData[]>([]);
 
@@ -63,17 +64,25 @@ function App() {
   }, [selectedCurrency]);
 
   return (
-    <main className="flex justify-center">
-      <div className="w-[70vw] h-[80vh] mt-32 bg-gray-400 h-max-[80vh]">
+    <main>
+      <Navbar />
+      <div className="flex  flex-col items-center mt-28">
+        <h1 className="text-4xl text-black">Currency Converter</h1>
+        <h2 className="mt-10 text-xl w-1/3 text-center text-[#8494A5] font-extralight">
+          Receive competitive and transparent pricing with no hidden spreads.
+          See how we compare.
+        </h2>
+      </div>
+      <div className="flex flex-col items-center justify-center">
         <CurrencyInput
           selectedCurrency={selectedCurrency}
           setSelectedCurrency={setSelectedCurrency}
           setCurrencyAmount={setCurrencyAmount}
           supportedCurrencies={supportedCurrencies}
         />
-        <div className="flex justify-center ">
+        <div className="flex justify-center mt-10">
           {tickerData.length > 0 && !!currencyAmount ? (
-            <div className="w-1/3 flex flex-col h-[70vh] overflow-auto bg-slate-200 p-5">
+            <div className=" flex flex-col h-[70vh] overflow-auto bg-slate-200 p-5">
               {tickerData.map((currency, index) => (
                 <ExchangeRateCard
                   key={index}
