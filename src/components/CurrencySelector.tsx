@@ -46,7 +46,7 @@ export const CurrencySelector = ({
       <div>
         <button
           type="button"
-          className="w-40 p-3 bg-white rounded-full flex items-center justify-around"
+          className="w-40 p-3 bg-white rounded-full flex items-center justify-around hover:bg-slate-100"
           aria-haspopup="true"
           aria-expanded={isOpen}
           onClick={(e) => {
@@ -64,7 +64,7 @@ export const CurrencySelector = ({
       {isOpen && (
         <div
           ref={popupRef}
-          className="shadow-2xl rounded-lg no-scrollbar origin-top-right absolute right-0 mt-1 w-40 h-[500px] overflow-auto bg-white"
+          className="shadow-2xl rounded-lg no-scrollbar origin-top-right absolute right-0 mt-1 w-40 h-[210px] overflow-auto bg-white"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="options-menu"
@@ -78,7 +78,7 @@ export const CurrencySelector = ({
                 onClick={() => handleSelect(currency)}
               >
                 <CurrencyImage src={`/assets/${currency}.png`} />
-                <span className="ml-1">{currency}</span>
+                <span className="ml-3">{currency}</span>
               </div>
             ))}
           </div>

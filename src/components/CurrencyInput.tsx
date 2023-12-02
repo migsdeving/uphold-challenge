@@ -9,9 +9,10 @@ import { CurrencySelector } from "./CurrencySelector";
 
 interface CurrencyInputProps {
   selectedCurrency: string;
-  supportedCurrencies: string[];
   setSelectedCurrency: Dispatch<SetStateAction<string>>;
+  supportedCurrencies: string[];
   setCurrencyAmount: Dispatch<SetStateAction<number>>;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 const DEBOUNCE_TIME = 500;
@@ -21,6 +22,7 @@ export const CurrencyInput = ({
   supportedCurrencies,
   setSelectedCurrency,
   setCurrencyAmount,
+  setIsLoading,
 }: CurrencyInputProps) => {
   const [inputAmount, setInputAmount] = useState("");
   const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,14 +30,16 @@ export const CurrencyInput = ({
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const timeoutId = setTimeout(() => {
       setCurrencyAmount(parseFloat(inputAmount));
+      setIsLoading(false);
     }, DEBOUNCE_TIME);
     return () => clearTimeout(timeoutId);
   }, [inputAmount]);
 
   return (
-    <div className="flex justify-between bg-[#F5F9FC]  mt-20 rounded-lg	p-3">
+    <div className="flex justify-between bg-[#F5F9FC] rounded-lg p-3 w-full">
       <input
         value={inputAmount}
         onChange={handleAmountChange}
@@ -44,19 +48,6 @@ export const CurrencyInput = ({
         className="focus:border-none text-5xl bg-transparent outline-none appearance-none"
         onWheel={(e) => e.currentTarget.blur()}
       />
-
-      {/*  <select
-          value={selectedCurrency}
-          className="p-3 rounded-full"
-          onChange={(e) => setSelectedCurrency(e.target.value)}
-        >
-          {supportedCurrencies.map((currency, index) => (
-            <option key={index} value={currency}>
-              {currency}
-            </option>
-          ))}
-        </select> */}
-
       <CurrencySelector
         selectedCurrency={selectedCurrency}
         supportedCurrencies={supportedCurrencies}
