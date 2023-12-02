@@ -82,7 +82,7 @@ function App() {
         />
         <div className="flex justify-center mt-10">
           {tickerData.length > 0 && !!currencyAmount ? (
-            <div className=" flex flex-col h-[70vh] overflow-auto bg-slate-200 p-5">
+            <div className=" flex flex-col h-[70vh] overflow-auto no-scrollbar bg-slate-200 p-5">
               {tickerData.map((currency, index) => (
                 <ExchangeRateCard
                   key={index}

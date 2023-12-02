@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { CurrencySelector } from "./CurrencySelector";
 
 interface CurrencyInputProps {
   selectedCurrency: string;
@@ -34,7 +35,7 @@ export const CurrencyInput = ({
   }, [inputAmount]);
 
   return (
-    <div className="flex justify-between bg-[#F5F9FC] w-1/3 mt-20 rounded-md	p-3">
+    <div className="flex justify-between bg-[#F5F9FC]  mt-20 rounded-lg	p-3">
       <input
         value={inputAmount}
         onChange={handleAmountChange}
@@ -43,17 +44,24 @@ export const CurrencyInput = ({
         className="focus:border-none text-5xl bg-transparent outline-none appearance-none"
         onWheel={(e) => e.currentTarget.blur()}
       />
-      <select
-        value={selectedCurrency}
-        className="p-3 rounded-full"
-        onChange={(e) => setSelectedCurrency(e.target.value)}
-      >
-        {supportedCurrencies.map((currency, index) => (
-          <option key={index} value={currency}>
-            {currency}
-          </option>
-        ))}
-      </select>
+
+      {/*  <select
+          value={selectedCurrency}
+          className="p-3 rounded-full"
+          onChange={(e) => setSelectedCurrency(e.target.value)}
+        >
+          {supportedCurrencies.map((currency, index) => (
+            <option key={index} value={currency}>
+              {currency}
+            </option>
+          ))}
+        </select> */}
+
+      <CurrencySelector
+        selectedCurrency={selectedCurrency}
+        supportedCurrencies={supportedCurrencies}
+        onChangeSelection={(selection) => setSelectedCurrency(selection)}
+      />
     </div>
   );
 };
