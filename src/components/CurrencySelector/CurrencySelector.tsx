@@ -1,16 +1,16 @@
 // CustomDropdown.tsx
 import { useEffect, useRef, useState } from "react";
-import { CurrencyImage } from "./CurrencyImage";
-import { ChevronDown } from "./icons/ChevronDown";
+import { CurrencyImage } from "../CurrencyImage/CurrencyImage";
+import { ChevronDown } from "../icons/ChevronDown";
 
 interface CurrencySelectorProps {
-  selectedCurrency: string;
+  selectedCurrency?: string;
   supportedCurrencies: string[];
   onChangeSelection: (currency: string) => void;
 }
 
 export const CurrencySelector = ({
-  selectedCurrency,
+  selectedCurrency = "USD",
   supportedCurrencies,
   onChangeSelection,
 }: CurrencySelectorProps) => {
@@ -25,13 +25,11 @@ export const CurrencySelector = ({
 
   useEffect(() => {
     const checkIfClickedOutside = (e: MouseEvent) => {
-      console.log(isOpen);
       if (
         popupRef.current &&
         !popupRef.current.contains(e?.target as Node) &&
         isOpen
       ) {
-        console.log("closing outside click");
         setIsOpen(false);
       }
     };
@@ -46,6 +44,7 @@ export const CurrencySelector = ({
       <div>
         <button
           type="button"
+          role="button"
           className="w-40 p-3 bg-white rounded-full flex items-center justify-around hover:bg-slate-100"
           aria-haspopup="true"
           aria-expanded={isOpen}
@@ -70,17 +69,19 @@ export const CurrencySelector = ({
           aria-labelledby="options-menu"
         >
           <div className="">
-            {supportedCurrencies.map((currency, index) => (
-              <div
-                key={index}
-                className="flex flex-row px-3 py-2 m-1 rounded-md items-center cursor-pointer hover:bg-slate-200"
-                role="menuitem"
-                onClick={() => handleSelect(currency)}
-              >
-                <CurrencyImage src={`/assets/${currency}.png`} />
-                <span className="ml-3">{currency}</span>
-              </div>
-            ))}
+            {supportedCurrencies
+              .filter((currency) => currency !== selectedCurrency)
+              .map((currency, index) => (
+                <div
+                  key={index}
+                  className="flex flex-row px-3 py-2 m-1 rounded-md items-center cursor-pointer hover:bg-slate-200"
+                  role="menuitem"
+                  onClick={() => handleSelect(currency)}
+                >
+                  <CurrencyImage src={`/assets/${currency}.png`} />
+                  <span className="ml-3">{currency}</span>
+                </div>
+              ))}
           </div>
         </div>
       )}

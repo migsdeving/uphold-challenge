@@ -8,6 +8,8 @@ interface CurrencyImageProps {
 export const CurrencyImage = ({ src, alt }: CurrencyImageProps) => {
   const [isImageLoading, setIsImageLoading] = useState(true);
 
+  const altText = alt ? { alt: alt } : {};
+
   const handleImageError = useCallback(
     ({ currentTarget }: React.SyntheticEvent<HTMLImageElement, Event>) => {
       currentTarget.onerror = null;
@@ -19,7 +21,10 @@ export const CurrencyImage = ({ src, alt }: CurrencyImageProps) => {
   return (
     <>
       {isImageLoading && (
-        <div className="animate-pulse flex space-x-4">
+        <div
+          data-testid="loading-state"
+          className="animate-pulse flex space-x-4"
+        >
           <div className="rounded-full bg-slate-700 h-10 w-10"></div>
         </div>
       )}
@@ -27,7 +32,7 @@ export const CurrencyImage = ({ src, alt }: CurrencyImageProps) => {
         className={`${isImageLoading ? "hidden" : "block"}`}
         src={src}
         onError={handleImageError}
-        alt={alt}
+        {...altText}
         onLoad={() => {
           setIsImageLoading(false);
         }}

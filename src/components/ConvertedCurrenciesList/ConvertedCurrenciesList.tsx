@@ -1,5 +1,5 @@
-import { CurrencyData } from "../types";
-import { ExchangeRateCard } from "./ExchangeRateCard";
+import { CurrencyData } from "../../types";
+import { ExchangeRateCard } from "../ExchangeRateCard/ExchangeRateCard";
 
 interface ConvertedCurrenciesListProps {
   tickerData: CurrencyData[];
@@ -15,7 +15,7 @@ export const ConvertedCurrenciesList = ({
   return (
     <div className="flex justify-center mt-10 p-3 w-full">
       {tickerData.length > 0 && !!currencyAmount ? (
-        <div className=" flex flex-col h-[70vh] w-full overflow-auto no-scrollbar ">
+        <div className="flex flex-col h-[70vh] w-full overflow-auto no-scrollbar">
           {tickerData.map((currency, index) => (
             <ExchangeRateCard
               key={index}

@@ -1,7 +1,7 @@
 import SDK from "@uphold/uphold-sdk-javascript";
 import { useEffect, useState } from "react";
-import { ConvertedCurrenciesList } from "./components/ConvertedCurrenciesList";
-import { CurrencyInput } from "./components/CurrencyInput";
+import { ConvertedCurrenciesList } from "./components/ConvertedCurrenciesList/ConvertedCurrenciesList";
+import { CurrencyInput } from "./components/CurrencyInput/CurrencyInput";
 import { Navbar } from "./components/Navbar";
 import { CurrencyData } from "./types";
 
@@ -22,7 +22,7 @@ function App() {
     const supportedCurrencies = filteredTickers.map(
       (tickerData) => tickerData.convertTo
     );
-    setSupportedCurrencies(supportedCurrencies);
+    setSupportedCurrencies(["USD", ...supportedCurrencies]);
   };
 
   const getRates = async () => {

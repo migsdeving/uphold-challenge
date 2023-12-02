@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { CurrencySelector } from "./CurrencySelector";
+import { CurrencySelector } from "../CurrencySelector/CurrencySelector";
 
 interface CurrencyInputProps {
   selectedCurrency: string;
