@@ -30,7 +30,10 @@ export const CurrencyImage = ({ src, alt }: CurrencyImageProps) => {
       )}
       <img
         className={`${isImageLoading ? "hidden" : "block"}`}
+        width={40}
+        height={40}
         src={src}
+        loading="lazy"
         onError={handleImageError}
         {...altText}
         onLoad={() => {

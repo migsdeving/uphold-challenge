@@ -1,22 +1,23 @@
 // CustomDropdown.tsx
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { SupportedCurrency } from "../../types";
 import { CurrencyImage } from "../CurrencyImage/CurrencyImage";
 import { ChevronDown } from "../icons/ChevronDown";
 
 interface CurrencySelectorProps {
-  selectedCurrency?: string;
-  supportedCurrencies: string[];
-  setSelectedCurrency: Dispatch<SetStateAction<string>>;
+  selectedCurrency: SupportedCurrency;
+  supportedCurrencies: SupportedCurrency[];
+  setSelectedCurrency: Dispatch<SetStateAction<SupportedCurrency>>;
 }
 
 export const CurrencySelector = ({
-  selectedCurrency = "USD",
+  selectedCurrency,
   supportedCurrencies,
   setSelectedCurrency,
 }: CurrencySelectorProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSelect = (currency: string) => {
+  const handleSelect = (currency: SupportedCurrency) => {
     setSelectedCurrency(currency);
     setIsOpen(false);
   };
@@ -39,6 +40,38 @@ export const CurrencySelector = ({
     };
   }, [isOpen]);
 
+  /*   const Popup = memo(function Popup({
+    supportedCurrencies,
+  }: {
+    supportedCurrencies: SupportedCurrency[];
+  }) {
+    return (
+      <div
+        ref={popupRef}
+        className="shadow-2xl rounded-lg no-scrollbar origin-top-right absolute right-0 mt-1 w-40 h-[210px] overflow-auto bg-white z-40"
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="options-menu"
+      >
+        <div className="">
+          {supportedCurrencies
+            .filter((currency) => currency.code !== selectedCurrency.code)
+            .map((currency, index) => (
+              <div
+                key={index}
+                className="flex flex-row px-3 py-2 m-1 rounded-md items-center cursor-pointer hover:bg-slate-200"
+                role="menuitem"
+                onClick={() => handleSelect(currency)}
+              >
+                <CurrencyImage src={currency.image} />
+                <span className="ml-3">{currency.code}</span>
+              </div>
+            ))}
+        </div>
+      </div>
+    );
+  }); */
+
   return (
     <div className="relative">
       <div>
@@ -53,8 +86,8 @@ export const CurrencySelector = ({
             e.stopPropagation();
           }}
         >
-          <CurrencyImage src={`/assets/${selectedCurrency}.png`} />
-          {selectedCurrency}
+          <CurrencyImage src={selectedCurrency.image} />
+          {selectedCurrency.code}
           <ChevronDown
             className={` transition ${isOpen ? "rotate-180" : ""}`}
           />
@@ -63,14 +96,14 @@ export const CurrencySelector = ({
       {isOpen && (
         <div
           ref={popupRef}
-          className="shadow-2xl rounded-lg no-scrollbar origin-top-right absolute right-0 mt-1 w-40 h-[210px] overflow-auto bg-white"
+          className="shadow-2xl rounded-lg no-scrollbar origin-top-right absolute right-0 mt-1 w-40 h-[210px] overflow-auto bg-white z-40"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="options-menu"
         >
           <div className="">
             {supportedCurrencies
-              .filter((currency) => currency !== selectedCurrency)
+              .filter((currency) => currency.code !== selectedCurrency.code)
               .map((currency, index) => (
                 <div
                   key={index}
@@ -78,8 +111,8 @@ export const CurrencySelector = ({
                   role="menuitem"
                   onClick={() => handleSelect(currency)}
                 >
-                  <CurrencyImage src={`/assets/${currency}.png`} />
-                  <span className="ml-3">{currency}</span>
+                  <CurrencyImage src={currency.image} />
+                  <span className="ml-3">{currency.code}</span>
                 </div>
               ))}
           </div>

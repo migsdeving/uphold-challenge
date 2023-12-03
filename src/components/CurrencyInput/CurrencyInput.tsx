@@ -5,12 +5,13 @@ import {
   useEffect,
   useState,
 } from "react";
+import { SupportedCurrency } from "../../types";
 import { CurrencySelector } from "../CurrencySelector/CurrencySelector";
 
 interface CurrencyInputProps {
-  selectedCurrency: string;
-  setSelectedCurrency: Dispatch<SetStateAction<string>>;
-  supportedCurrencies: string[];
+  selectedCurrency: SupportedCurrency;
+  setSelectedCurrency: Dispatch<SetStateAction<SupportedCurrency>>;
+  supportedCurrencies: SupportedCurrency[];
   setCurrencyAmount: Dispatch<SetStateAction<number>>;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
 }

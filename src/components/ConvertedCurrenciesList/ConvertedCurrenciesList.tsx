@@ -1,29 +1,37 @@
-import { CurrencyData } from "../../types";
+import SDK from "@uphold/uphold-sdk-javascript";
+import { SupportedCurrency } from "../../types";
 import { ExchangeRateCard } from "../ExchangeRateCard/ExchangeRateCard";
 
 interface ConvertedCurrenciesListProps {
-  tickerData: CurrencyData[];
+  selectedCurrency: SupportedCurrency;
+  supportedCurrencies: SupportedCurrency[];
   currencyAmount: number;
   loading: boolean;
 }
 
+const sdk = new SDK({
+  baseUrl: "http://api-sandbox.uphold.com",
+  clientId: process.env.REACT_APP_SDK_CLIENT_ID ?? "",
+  clientSecret: process.env.REACT_APP_SDK_CLIENT_SECRET ?? "",
+});
+
 export const ConvertedCurrenciesList = ({
-  tickerData,
+  supportedCurrencies,
+  selectedCurrency,
   currencyAmount,
   loading,
 }: ConvertedCurrenciesListProps) => {
   return (
     <div className="flex justify-center mt-10 p-3 w-full">
-      {tickerData.length > 0 && !!currencyAmount ? (
+      {supportedCurrencies.length > 0 && !!currencyAmount ? (
         <div className="flex flex-col h-[70vh] w-full overflow-auto no-scrollbar">
-          {tickerData.map((currency, index) => (
+          {supportedCurrencies.map((currency, index) => (
             <ExchangeRateCard
               key={index}
-              ticker={currency.convertTo}
-              ask={parseFloat(currency.ask)}
-              bid={parseFloat(currency.bid)}
+              sdk={sdk}
+              selectedCurrency={selectedCurrency}
+              currency={currency}
               currencyAmount={currencyAmount}
-              loading={loading}
             />
           ))}
         </div>

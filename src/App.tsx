@@ -3,7 +3,24 @@ import { useEffect, useState } from "react";
 import { ConvertedCurrenciesList } from "./components/ConvertedCurrenciesList/ConvertedCurrenciesList";
 import { CurrencyInput } from "./components/CurrencyInput/CurrencyInput";
 import { Navbar } from "./components/Navbar/Navbar";
-import { CurrencyData } from "./types";
+import { CurrencyData, SupportedCurrency } from "./types";
+
+const USD = {
+  code: "USD",
+  features: ["buy", "deposit", "sell", "transfer", "withdraw"],
+  formatting: {
+    decimal: ".",
+    format: "__symbol__ __value__ __code__",
+    grouping: ",",
+    precision: 2,
+  },
+  image: "https://cdn.uphold.com/assets/USD.svg",
+  name: "US Dollar",
+  shortName: "USD",
+  status: "open",
+  symbol: "$",
+  type: "fiat",
+} as SupportedCurrency;
 
 const sdk = new SDK({
   baseUrl: "http://api-sandbox.uphold.com",
@@ -13,20 +30,42 @@ const sdk = new SDK({
 
 function App() {
   const [currencyAmount, setCurrencyAmount] = useState(0);
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
-  const [supportedCurrencies, setSupportedCurrencies] = useState<string[]>([]);
+  const [selectedCurrency, setSelectedCurrency] = useState(USD);
+  const [supportedCurrencies, setSupportedCurrencies] = useState<
+    SupportedCurrency[]
+  >([]);
   const [tickerData, setTickerData] = useState<CurrencyData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const filterAndSetCurrencies = (filteredTickers: CurrencyData[]) => {
-    const supportedCurrencies = filteredTickers.map(
-      (tickerData) => tickerData.convertTo
-    );
-    setSupportedCurrencies(["USD", ...supportedCurrencies]);
+  const getSupportedCurrencies = async () => {
+    const fullData: SupportedCurrency[] = [];
+    let lastAmountOfCurrencies = 150;
+    let index = 0;
+
+    while (lastAmountOfCurrencies >= 150) {
+      const res = await fetch("/v0/assets", {
+        headers: {
+          referrerPolicy: "unsafe-url",
+          Range: `items=${index * 150}-${index * 150 + (150 - 1)}`,
+        },
+      });
+      const data = await res.json();
+      fullData.push(...data);
+      lastAmountOfCurrencies = data.length;
+      index++;
+    }
+
+    console.log(fullData.find((cur) => cur.code === "USD"));
+    return fullData;
   };
 
   const getRates = async () => {
-    const cachedCurrencyData = localStorage.getItem(selectedCurrency);
+    if (supportedCurrencies.length === 0) {
+      const currencies: SupportedCurrency[] = await getSupportedCurrencies();
+      setSupportedCurrencies(currencies);
+    }
+
+    /* const cachedCurrencyData = localStorage.getItem(selectedCurrency.code);
 
     if (cachedCurrencyData) {
       const currencyData: CurrencyData[] = JSON.parse(cachedCurrencyData);
@@ -38,25 +77,25 @@ function App() {
     }
 
     const newCurrencyData: CurrencyData[] = await sdk.getTicker(
-      selectedCurrency
+      selectedCurrency.code
     );
+
     // filtering to get only one-way rates (selected-anything)
-    const filteredRates = newCurrencyData
-      .filter((ticker) => ticker.currency === selectedCurrency)
-      .map((ticker) => ({
-        ...ticker,
-        //inconsistent pair format from the api requires me to clean the data
-        convertTo: ticker.pair
-          .replace(`-${selectedCurrency}`, "")
-          .replace(selectedCurrency, ""),
-      }));
+    const filteredRates = newCurrencyData.filter(
+      (ticker) => ticker.currency === selectedCurrency.code
+    );
+
     if (!cachedCurrencyData) setTickerData(filteredRates);
 
-    localStorage.setItem(selectedCurrency, JSON.stringify(filteredRates));
+    localStorage.setItem(selectedCurrency.code, JSON.stringify(filteredRates));
 
-    if (supportedCurrencies.length === 0) filterAndSetCurrencies(filteredRates);
+    if (supportedCurrencies.length === 0) {
+      const currencies: SupportedCurrency[] = await getSupportedCurrencies();
+      setSupportedCurrencies(currencies);
+      console.log(currencies.find((cur) => cur.code === "USD"));
+    }
 
-    setIsLoading(false);
+    setIsLoading(false); */
   };
 
   useEffect(() => {
@@ -83,7 +122,8 @@ function App() {
             setIsLoading={setIsLoading}
           />
           <ConvertedCurrenciesList
-            tickerData={tickerData}
+            supportedCurrencies={supportedCurrencies}
+            selectedCurrency={selectedCurrency}
             currencyAmount={currencyAmount}
             loading={isLoading}
           />

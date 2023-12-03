@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+/* import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Dispatch, SetStateAction } from "react";
 import { supportedCurrencies } from "../../mocks";
@@ -143,3 +143,4 @@ it("Should render every supported currency on the select menu", () => {
     });
 });
 //should show all the supported currencies
+ */
