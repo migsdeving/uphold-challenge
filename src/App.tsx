@@ -2,7 +2,7 @@ import SDK from "@uphold/uphold-sdk-javascript";
 import { useEffect, useState } from "react";
 import { ConvertedCurrenciesList } from "./components/ConvertedCurrenciesList/ConvertedCurrenciesList";
 import { CurrencyInput } from "./components/CurrencyInput/CurrencyInput";
-import { Navbar } from "./components/Navbar";
+import { Navbar } from "./components/Navbar/Navbar";
 import { CurrencyData } from "./types";
 
 const sdk = new SDK({

@@ -2,7 +2,10 @@ export const Navbar = () => {
   return (
     <nav className=" p-12">
       <div className="grid grid-cols-3 gap-4 text-center justify-center">
-        <div className="flex justify-center items-center ">
+        <div
+          data-testid="navigation-links"
+          className="flex justify-center items-center "
+        >
           <a href="">Personal</a>
           <a className="ml-12" href="">
             Business
@@ -15,7 +18,10 @@ export const Navbar = () => {
           <img src="/assets/logo.svg" alt="logo" />
         </div>
         <div className="flex justify-center items-center ">
-          <button className="bg-[#6FE68A] w-36 rounded-full hover:bg-[#329C4A] transition ease-in-out p-3 text-white">
+          <button
+            data-testid="login-button"
+            className="bg-[#6FE68A] w-36 rounded-full hover:bg-[#329C4A] transition ease-in-out p-3 text-white"
+          >
             Login
           </button>
         </div>

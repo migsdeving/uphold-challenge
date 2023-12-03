@@ -51,7 +51,7 @@ export const CurrencyInput = ({
       <CurrencySelector
         selectedCurrency={selectedCurrency}
         supportedCurrencies={supportedCurrencies}
-        onChangeSelection={(selection) => setSelectedCurrency(selection)}
+        setSelectedCurrency={setSelectedCurrency}
       />
     </div>
   );

@@ -8,7 +8,7 @@ import {
 import { supportedCurrencies } from "../../mocks";
 import { CurrencyInput } from "./CurrencyInput";
 
-it("Input field updates value when the user types", () => {
+it("updates input field value when the user types", () => {
   render(
     <CurrencyInput
       selectedCurrency="USD"
@@ -25,6 +25,23 @@ it("Input field updates value when the user types", () => {
   fireEvent.change(inputElement, { target: { value: "123.45" } });
 
   expect(inputElement).toHaveValue(123.45);
+});
+it("validates that the mouse-wheel doesn't trigger the number input", () => {
+  render(
+    <CurrencyInput
+      selectedCurrency="USD"
+      supportedCurrencies={supportedCurrencies}
+      setSelectedCurrency={() => undefined}
+      setCurrencyAmount={() => undefined}
+      setIsLoading={() => undefined}
+    />
+  );
+
+  const inputElement = screen.getByPlaceholderText("0.00");
+
+  fireEvent.wheel(inputElement);
+
+  expect(document.activeElement).not.toBe(inputElement);
 });
 
 it("handles the input debounce correctly", async () => {

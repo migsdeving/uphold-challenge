@@ -1,23 +1,23 @@
 // CustomDropdown.tsx
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { CurrencyImage } from "../CurrencyImage/CurrencyImage";
 import { ChevronDown } from "../icons/ChevronDown";
 
 interface CurrencySelectorProps {
   selectedCurrency?: string;
   supportedCurrencies: string[];
-  onChangeSelection: (currency: string) => void;
+  setSelectedCurrency: Dispatch<SetStateAction<string>>;
 }
 
 export const CurrencySelector = ({
   selectedCurrency = "USD",
   supportedCurrencies,
-  onChangeSelection,
+  setSelectedCurrency,
 }: CurrencySelectorProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (currency: string) => {
-    onChangeSelection(currency);
+    setSelectedCurrency(currency);
     setIsOpen(false);
   };
 

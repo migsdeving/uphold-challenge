@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { Dispatch, SetStateAction } from "react";
 import { supportedCurrencies } from "../../mocks";
 import { CurrencySelector } from "./CurrencySelector";
 
@@ -7,7 +8,9 @@ it("Should show USD by default", () => {
   render(
     <CurrencySelector
       supportedCurrencies={supportedCurrencies}
-      onChangeSelection={() => undefined}
+      setSelectedCurrency={
+        (() => undefined) as Dispatch<SetStateAction<string>>
+      }
     />
   );
 
@@ -19,7 +22,9 @@ it("Should open/close the select menu when clicking the button", () => {
   render(
     <CurrencySelector
       supportedCurrencies={supportedCurrencies}
-      onChangeSelection={() => undefined}
+      setSelectedCurrency={
+        (() => undefined) as Dispatch<SetStateAction<string>>
+      }
     />
   );
 
@@ -39,7 +44,9 @@ it("Should close the select menu when clicking outside it", () => {
   render(
     <CurrencySelector
       supportedCurrencies={supportedCurrencies}
-      onChangeSelection={() => undefined}
+      setSelectedCurrency={
+        (() => undefined) as Dispatch<SetStateAction<string>>
+      }
     />
   );
 
@@ -64,7 +71,11 @@ it("Should change the displayed currency when a different one is selected", () =
     <CurrencySelector
       selectedCurrency={selectedCurrency}
       supportedCurrencies={supportedCurrencies}
-      onChangeSelection={(currency: string) => (selectedCurrency = currency)}
+      setSelectedCurrency={
+        ((value: string) => (selectedCurrency = value)) as Dispatch<
+          SetStateAction<string>
+        >
+      }
     />
   );
 
@@ -72,7 +83,11 @@ it("Should change the displayed currency when a different one is selected", () =
     <CurrencySelector
       selectedCurrency={selectedCurrency}
       supportedCurrencies={supportedCurrencies}
-      onChangeSelection={(currency: string) => (selectedCurrency = currency)}
+      setSelectedCurrency={
+        ((value: string) => (selectedCurrency = value)) as Dispatch<
+          SetStateAction<string>
+        >
+      }
     />
   );
 
@@ -94,7 +109,11 @@ it("Should change the displayed currency when a different one is selected", () =
     <CurrencySelector
       selectedCurrency={selectedCurrency}
       supportedCurrencies={supportedCurrencies}
-      onChangeSelection={(currency: string) => (selectedCurrency = currency)}
+      setSelectedCurrency={
+        ((value: string) => (selectedCurrency = value)) as Dispatch<
+          SetStateAction<string>
+        >
+      }
     />
   );
   expect(selectButton.textContent).toBe("BTC");
@@ -103,7 +122,9 @@ it("Should render every supported currency on the select menu", () => {
   render(
     <CurrencySelector
       supportedCurrencies={supportedCurrencies}
-      onChangeSelection={() => undefined}
+      setSelectedCurrency={
+        (() => undefined) as Dispatch<SetStateAction<string>>
+      }
     />
   );
 
