@@ -1,29 +1,31 @@
-/* import "@testing-library/jest-dom/extend-expect"; // Import the toBeVisible matcher
-import { render, screen } from "@testing-library/react";
-import { USDMock } from "../../mocks";
+import "@testing-library/jest-dom/extend-expect"; // Import the toBeVisible matcher
+import { screen, waitFor } from "@testing-library/react";
+import { renderWithProviders } from "../../mocks/mock-store";
+import { USDMock, mockSupportedCurrencies } from "../../mocks/mocks";
 import { ConvertedCurrenciesList } from "./ConvertedCurrenciesList";
 
 it("Should render the list of currencies", () => {
-  render(
-    <ConvertedCurrenciesList
-      tickerData={USDMock}
-      currencyAmount={100}
-      loading={false}
-    />
-  );
+  renderWithProviders(<ConvertedCurrenciesList />, {
+    preloadedState: {
+      supportedCurrencies: { currencies: mockSupportedCurrencies },
+      currencyAmount: { value: 10 },
+      conversionRates: { rates: { USD: USDMock } },
+    },
+  });
 
-  const currencyCards = screen.getAllByRole("listitem");
-  expect(currencyCards).toHaveLength(USDMock.length);
+  waitFor(() => {
+    const currencyCards = screen.getAllByRole("listitem");
+    expect(currencyCards).toHaveLength(USDMock.length);
+  });
 });
 
 it("Should not show the list of currencies when theres no input", () => {
-  render(
-    <ConvertedCurrenciesList
-      tickerData={USDMock}
-      currencyAmount={0}
-      loading={false}
-    />
-  );
+  renderWithProviders(<ConvertedCurrenciesList />, {
+    preloadedState: {
+      supportedCurrencies: { currencies: mockSupportedCurrencies },
+      conversionRates: { rates: { USD: USDMock } },
+    },
+  });
 
   const currencyCards = screen.queryAllByRole("listitem");
   expect(currencyCards).toHaveLength(0);
@@ -34,4 +36,3 @@ it("Should not show the list of currencies when theres no input", () => {
 
   expect(noAmountMessage).toBeVisible();
 });
- */

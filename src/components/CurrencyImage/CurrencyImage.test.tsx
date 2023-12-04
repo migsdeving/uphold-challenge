@@ -1,4 +1,4 @@
-/* import { render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { CurrencyImage } from "./CurrencyImage";
 
 it("Hides image while loading", () => {
@@ -10,4 +10,3 @@ it("Hides image while loading", () => {
   const image = screen.getByRole("img", { hidden: true });
   expect(image).toBeInTheDocument();
 });
- */

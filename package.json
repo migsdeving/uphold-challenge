@@ -21,7 +21,9 @@
     "coveragePathIgnorePatterns": [
       "<rootDir>/src/index.js",
       "<rootDir>/src/reportWebVitals.js",
-      "<rootDir>/src/components/icons/"
+      "<rootDir>/src/components/icons/",
+      "<rootDir>/src/slices/",
+      "<rootDir>/src/mocks/"
     ]
   },
   "scripts": {

@@ -1,32 +1,40 @@
-/* import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Dispatch, SetStateAction } from "react";
-import { supportedCurrencies } from "../../mocks";
+import { renderWithProviders } from "../../mocks/mock-store";
+import { mockSupportedCurrencies } from "../../mocks/mocks";
+import { SupportedCurrency } from "../../slices/supportedCurrencies";
 import { CurrencySelector } from "./CurrencySelector";
 
 it("Should show USD by default", () => {
-  render(
-    <CurrencySelector
-      supportedCurrencies={supportedCurrencies}
-      setSelectedCurrency={
-        (() => undefined) as Dispatch<SetStateAction<string>>
-      }
-    />
-  );
-
+  renderWithProviders(<CurrencySelector />, {
+    preloadedState: {
+      selectedCurrency: {
+        currency: mockSupportedCurrencies.find(
+          ({ code }) => code === "USD"
+        ) as SupportedCurrency,
+      },
+      supportedCurrencies: {
+        currencies: mockSupportedCurrencies as SupportedCurrency[],
+      },
+    },
+  });
   const selectButton = screen.getByRole("button");
   expect(selectButton).toBeVisible();
   expect(selectButton.textContent).toBe("USD");
 });
 it("Should open/close the select menu when clicking the button", () => {
-  render(
-    <CurrencySelector
-      supportedCurrencies={supportedCurrencies}
-      setSelectedCurrency={
-        (() => undefined) as Dispatch<SetStateAction<string>>
-      }
-    />
-  );
+  renderWithProviders(<CurrencySelector />, {
+    preloadedState: {
+      selectedCurrency: {
+        currency: mockSupportedCurrencies.find(
+          ({ code }) => code === "USD"
+        ) as SupportedCurrency,
+      },
+      supportedCurrencies: {
+        currencies: mockSupportedCurrencies as SupportedCurrency[],
+      },
+    },
+  });
 
   const selectButton = screen.getByRole("button");
   expect(selectButton).toBeVisible();
@@ -41,14 +49,18 @@ it("Should open/close the select menu when clicking the button", () => {
   expect(selectMenu).not.toBeInTheDocument();
 });
 it("Should close the select menu when clicking outside it", () => {
-  render(
-    <CurrencySelector
-      supportedCurrencies={supportedCurrencies}
-      setSelectedCurrency={
-        (() => undefined) as Dispatch<SetStateAction<string>>
-      }
-    />
-  );
+  renderWithProviders(<CurrencySelector />, {
+    preloadedState: {
+      selectedCurrency: {
+        currency: mockSupportedCurrencies.find(
+          ({ code }) => code === "USD"
+        ) as SupportedCurrency,
+      },
+      supportedCurrencies: {
+        currencies: mockSupportedCurrencies as SupportedCurrency[],
+      },
+    },
+  });
 
   const selectButton = screen.getByRole("button");
   expect(selectButton).toBeVisible();
@@ -67,29 +79,18 @@ it("Should close the select menu when clicking outside it", () => {
 it("Should change the displayed currency when a different one is selected", () => {
   let selectedCurrency = "USD";
 
-  const component = (
-    <CurrencySelector
-      selectedCurrency={selectedCurrency}
-      supportedCurrencies={supportedCurrencies}
-      setSelectedCurrency={
-        ((value: string) => (selectedCurrency = value)) as Dispatch<
-          SetStateAction<string>
-        >
-      }
-    />
-  );
-
-  const { rerender } = render(
-    <CurrencySelector
-      selectedCurrency={selectedCurrency}
-      supportedCurrencies={supportedCurrencies}
-      setSelectedCurrency={
-        ((value: string) => (selectedCurrency = value)) as Dispatch<
-          SetStateAction<string>
-        >
-      }
-    />
-  );
+  const { rerender } = renderWithProviders(<CurrencySelector />, {
+    preloadedState: {
+      selectedCurrency: {
+        currency: mockSupportedCurrencies.find(
+          ({ code }) => code === "USD"
+        ) as SupportedCurrency,
+      },
+      supportedCurrencies: {
+        currencies: mockSupportedCurrencies as SupportedCurrency[],
+      },
+    },
+  });
 
   const selectButton = screen.getByRole("button");
   expect(selectButton).toBeVisible();
@@ -105,28 +106,22 @@ it("Should change the displayed currency when a different one is selected", () =
 
   expect(selectMenu).not.toBeInTheDocument();
 
-  rerender(
-    <CurrencySelector
-      selectedCurrency={selectedCurrency}
-      supportedCurrencies={supportedCurrencies}
-      setSelectedCurrency={
-        ((value: string) => (selectedCurrency = value)) as Dispatch<
-          SetStateAction<string>
-        >
-      }
-    />
-  );
+  rerender(<CurrencySelector />);
   expect(selectButton.textContent).toBe("BTC");
 });
 it("Should render every supported currency on the select menu", () => {
-  render(
-    <CurrencySelector
-      supportedCurrencies={supportedCurrencies}
-      setSelectedCurrency={
-        (() => undefined) as Dispatch<SetStateAction<string>>
-      }
-    />
-  );
+  renderWithProviders(<CurrencySelector />, {
+    preloadedState: {
+      selectedCurrency: {
+        currency: mockSupportedCurrencies.find(
+          ({ code }) => code === "USD"
+        ) as SupportedCurrency,
+      },
+      supportedCurrencies: {
+        currencies: mockSupportedCurrencies as SupportedCurrency[],
+      },
+    },
+  });
 
   const selectButton = screen.getByRole("button");
   expect(selectButton).toBeVisible();
@@ -136,11 +131,9 @@ it("Should render every supported currency on the select menu", () => {
   const selectMenu = screen.getByRole("menu");
   expect(selectMenu).toBeVisible();
 
-  supportedCurrencies
-    .filter((currency) => currency !== "USD")
+  mockSupportedCurrencies
+    .filter((currency) => currency.code !== "USD")
     .forEach((currency) => {
-      expect(selectMenu).toHaveTextContent(currency);
+      expect(selectMenu).toHaveTextContent(currency.code);
     });
 });
-//should show all the supported currencies
- */

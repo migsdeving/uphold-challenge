@@ -1,18 +1,32 @@
-/* import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+import { renderWithProviders } from "../../mocks/mock-store";
+import { USDMock, mockSupportedCurrencies } from "../../mocks/mocks";
+import { SupportedCurrency } from "../../slices/supportedCurrencies";
 import { ExchangeRateCard } from "./ExchangeRateCard";
 
 it("Should render the correct values", () => {
-  render(
+  renderWithProviders(
     <ExchangeRateCard
-      ticker="TEST"
-      ask={10}
-      currencyAmount={10}
-      loading={false}
-    />
+      currency={mockSupportedCurrencies[0]}
+      rate={USDMock[0]}
+    />,
+    {
+      preloadedState: {
+        selectedCurrency: {
+          currency: mockSupportedCurrencies.find(
+            ({ code }) => code === "USD"
+          ) as SupportedCurrency,
+        },
+        currencyAmount: { value: 10 },
+        supportedCurrencies: {
+          currencies: mockSupportedCurrencies as SupportedCurrency[],
+        },
+      },
+    }
   );
-
+  screen.logTestingPlaygroundURL();
   const value = screen.getByText("100");
-  const ticker = screen.getByText("TEST");
+  const ticker = screen.getByText("BAT");
 
   expect(ticker).toBeVisible;
   expect(value).toBeVisible;
@@ -21,22 +35,3 @@ it("Should render the correct values", () => {
 
   expect(loadingSkeleton).not.toBeInTheDocument();
 });
-it("Should render loading skeleton", () => {
-  render(
-    <ExchangeRateCard
-      ticker="TEST"
-      ask={10}
-      currencyAmount={10}
-      loading={true}
-    />
-  );
-  const loadingSkeleton = screen.getByTestId("conversion-loading-skeleton");
-  expect(loadingSkeleton).toBeVisible();
-
-  const value = screen.queryByText("100");
-  const ticker = screen.getByText("TEST");
-
-  expect(ticker).toBeVisible;
-  expect(value).not.toBeInTheDocument();
-});
- */

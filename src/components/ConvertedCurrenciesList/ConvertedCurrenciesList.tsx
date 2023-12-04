@@ -43,7 +43,6 @@ export const ConvertedCurrenciesList = () => {
 
     try {
       const tickers: any[] = await sdk.getTicker(selectedCurrency.code);
-      console.log(tickers);
 
       const filteredTickers = tickers.filter(
         (ticker) => ticker.currency === selectedCurrency.code
