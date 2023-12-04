@@ -18,7 +18,7 @@ export const ExchangeRateCard = ({ currency, rate }: ExchangeRateCardProps) => {
       role="listitem"
       className="flex justify-between items-center p-3 rounded-md text-xl text-dark-800 hover:bg-slate-100"
     >
-      <div>{(currencyAmount || 0) * parseFloat(rate.ask)}</div>
+      <div>{((currencyAmount || 0) * 1) / parseFloat(rate.ask)}</div>
       <div className="flex px-3 py-2 mr-5  items-center w-28 text-base">
         <CurrencyImage src={currency.image} alt={currency.code} />
         <div className="ml-3">{currency.code}</div>

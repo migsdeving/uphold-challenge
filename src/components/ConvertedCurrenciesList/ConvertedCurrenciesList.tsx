@@ -1,17 +1,11 @@
-import SDK from "@uphold/uphold-sdk-javascript";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Rate, setConversionRates } from "../../slices/conversionRate";
+import { setConversionRates } from "../../slices/conversionRate";
 import { SupportedCurrency } from "../../slices/supportedCurrencies";
 import { RootState } from "../../store";
+import { sdk } from "../../utils";
 import { ExchangeRateCard } from "../ExchangeRateCard/ExchangeRateCard";
 import { ExchangeRateCardSkeleton } from "../ExchangeRateCard/ExchangeRateCardSkeleton";
-
-const sdk = new SDK({
-  baseUrl: "http://api-sandbox.uphold.com",
-  clientId: process.env.REACT_APP_SDK_CLIENT_ID ?? "",
-  clientSecret: process.env.REACT_APP_SDK_CLIENT_SECRET ?? "",
-});
 
 export const ConvertedCurrenciesList = () => {
   const supportedCurrencies = useSelector(
@@ -45,14 +39,22 @@ export const ConvertedCurrenciesList = () => {
   };
 
   const fetchRates = async () => {
-    if (!conversionRates) setIsLoading(true);
-    const tickers: Rate[] = await sdk.getTicker(selectedCurrency.code);
-    const filteredTickers = tickers.filter(
-      (ticker) => ticker.currency === selectedCurrency.code
-    );
-    dispatch(
-      setConversionRates({ key: selectedCurrency.code, data: filteredTickers })
-    );
+    if (!conversionRates && currencyAmount) setIsLoading(true);
+
+    try {
+      const tickers: any[] = await sdk.getTicker(selectedCurrency.code);
+      console.log(tickers);
+
+      const filteredTickers = tickers.filter(
+        (ticker) => ticker.currency === selectedCurrency.code
+      );
+      dispatch(
+        setConversionRates({
+          key: selectedCurrency.code,
+          data: filteredTickers,
+        })
+      );
+    } catch (e) {}
     setIsLoading(false);
   };
 

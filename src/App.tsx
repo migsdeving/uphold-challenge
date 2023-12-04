@@ -21,16 +21,20 @@ function App() {
     let index = 0;
 
     while (lastAmountOfCurrencies >= 150) {
-      const res = await fetch("/v0/assets", {
-        headers: {
-          referrerPolicy: "unsafe-url",
-          Range: `items=${index * 150}-${index * 150 + (150 - 1)}`,
-        },
-      });
-      const data = await res.json();
-      fullData.push(...data);
-      lastAmountOfCurrencies = data.length;
-      index++;
+      try {
+        const res = await fetch("/v0/assets", {
+          headers: {
+            referrerPolicy: "unsafe-url",
+            Range: `items=${index * 150}-${index * 150 + (150 - 1)}`,
+          },
+        });
+        const data = await res.json();
+        fullData.push(...data);
+        lastAmountOfCurrencies = data.length;
+        index++;
+      } catch {
+        lastAmountOfCurrencies = 1;
+      }
     }
 
     return fullData;

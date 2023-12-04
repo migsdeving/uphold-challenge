@@ -16,7 +16,7 @@ export const CurrencyImage = ({ src, alt }: CurrencyImageProps) => {
       currentTarget.src = "/assets/Crypto.png";
       setIsImageLoading(false);
     },
-    []
+    [src]
   );
   return (
     <>
@@ -33,7 +33,6 @@ export const CurrencyImage = ({ src, alt }: CurrencyImageProps) => {
         width={40}
         height={40}
         src={src}
-        loading="lazy"
         onError={handleImageError}
         {...altText}
         onLoad={() => {
