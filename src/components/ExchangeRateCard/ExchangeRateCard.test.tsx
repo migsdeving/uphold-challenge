@@ -24,7 +24,6 @@ it("Should render the correct values", () => {
       },
     }
   );
-  screen.logTestingPlaygroundURL();
   const value = screen.getByText("100");
   const ticker = screen.getByText("BAT");
 
