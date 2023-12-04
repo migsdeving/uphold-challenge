@@ -98,7 +98,7 @@ export const ConvertedCurrenciesList = ({
       {isLoading ? (
         <ExchangeRateCardSkeleton />
       ) : supportedCurrencies.length > 0 && !!currencyAmount ? (
-        <div className="flex flex-col h-[40vh] w-full overflow-auto">
+        <div className="flex flex-col h-[80vh] w-full overflow-auto">
           <div
             onScroll={handleInfiniteLoading}
             ref={listInnerRef}

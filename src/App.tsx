@@ -55,14 +55,16 @@ function App() {
     <main>
       <Navbar />
       <div className="flex flex-col justify-center items-center">
-        <div className="flex  flex-col items-center m-10">
-          <h1 className="text-4xl text-black">Currency Converter</h1>
-          <h2 className="mt-10 text-xl w-2/3 text-center text-[#8494A5] font-extralight">
+        <div className="flex  flex-col items-center justify-center m-10">
+          <h1 className="text-4xl text-black text-center">
+            Currency Converter
+          </h1>
+          <h2 className="mt-10  text-xl w-full lg:w-2/3 text-center text-[#8494A5] font-extralight">
             Receive competitive and transparent pricing with no hidden spreads.
             See how we compare.
           </h2>
         </div>
-        <div className="w-[40vw] ">
+        <div className="max-w-[80vw] md:max-w-[60vw]  lg:max-w-[50vw] xl:max-w-[40vw] ">
           <CurrencyInput />
           <ConvertedCurrenciesList itemsPerPage={30} />
         </div>

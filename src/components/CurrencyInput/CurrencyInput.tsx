@@ -21,16 +21,18 @@ export const CurrencyInput = () => {
   }, [inputAmount]);
 
   return (
-    <div className="flex justify-between bg-[#F5F9FC] rounded-lg p-3 w-full">
+    <div className="flex justify-between bg-[#F5F9FC] rounded-lg p-3 w-full relative">
       <input
         value={inputAmount}
         onChange={handleAmountChange}
         placeholder="0.00"
         type="number"
-        className="focus:border-none text-5xl bg-transparent outline-none appearance-none"
+        className="focus:border-none text-5xl bg-transparent outline-none appearance-none w-2/3"
         onWheel={(e) => e.currentTarget.blur()}
       />
-      <CurrencySelector />
+      <div className="relative">
+        <CurrencySelector />
+      </div>
     </div>
   );
 };
