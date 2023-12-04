@@ -71,6 +71,8 @@ export const ConvertedCurrenciesList = ({
     setPage(1);
   }, [selectedCurrency]);
 
+  console.log(supportedCurrencies.slice(0, page * itemsPerPage));
+
   const handleInfiniteLoading = (e: any) => {
     const debounceDelay = 500;
 
@@ -100,6 +102,7 @@ export const ConvertedCurrenciesList = ({
       ) : supportedCurrencies.length > 0 && !!currencyAmount ? (
         <div className="flex flex-col h-[80vh] w-full overflow-auto">
           <div
+            role="list"
             onScroll={handleInfiniteLoading}
             ref={listInnerRef}
             className="scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-slate-300 overflow-y-scroll h-full"

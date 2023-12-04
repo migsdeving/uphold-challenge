@@ -1,6 +1,6 @@
 import { act, fireEvent, screen, waitFor } from "@testing-library/react";
-import { renderWithProviders } from "../../mocks/mock-store";
-import { USDMock, mockSupportedCurrencies } from "../../mocks/mocks";
+import { renderWithProviders } from "../../../mocks/mock-store";
+import { USDMock, mockSupportedCurrencies } from "../../../mocks/mocks";
 import { SupportedCurrency } from "../../slices/supportedCurrencies";
 import { CurrencyInput } from "./CurrencyInput";
 

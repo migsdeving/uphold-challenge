@@ -78,6 +78,7 @@ export const CurrencySelector = () => {
                 .filter((currency) => currency.code !== selectedCurrency.code)
                 .map((currency, index) => (
                   <div
+                    data-testid={`${currency.code}-selector`}
                     key={index}
                     className="flex flex-row px-3 py-2 m-1 rounded-md items-center cursor-pointer hover:bg-slate-200"
                     role="menuitem"

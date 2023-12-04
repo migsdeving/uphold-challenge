@@ -6,5 +6,8 @@
     "strict": true,
     "skipLibCheck": true,
     "jsx": "react-jsx"
-  }
+  },
+  "types": ["cypress", "node"],
+  "include": ["src", "node_modules/cypress", "globals.d.ts", "mocks"],
+  "exclude": ["node_modules/cypress"]
 }

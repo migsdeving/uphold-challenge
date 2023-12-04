@@ -1,10 +1,10 @@
 import { screen } from "@testing-library/react";
-import { renderWithProviders } from "../../mocks/mock-store";
-import { USDMock, mockSupportedCurrencies } from "../../mocks/mocks";
+import { renderWithProviders } from "../../../mocks/mock-store";
+import { USDMock, mockSupportedCurrencies } from "../../../mocks/mocks";
 import { SupportedCurrency } from "../../slices/supportedCurrencies";
 import { ExchangeRateCard } from "./ExchangeRateCard";
 
-it("Should render the correct values", () => {
+test("Should render the correct values", () => {
   renderWithProviders(
     <ExchangeRateCard
       currency={mockSupportedCurrencies[0]}

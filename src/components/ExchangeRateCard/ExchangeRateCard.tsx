@@ -15,6 +15,7 @@ export const ExchangeRateCard = ({ currency, rate }: ExchangeRateCardProps) => {
 
   return (
     <div
+      data-testid={`${currency.code}-conversion`}
       role="listitem"
       className="flex justify-between items-center p-3 rounded-md text-xl text-dark-800 hover:bg-slate-100"
     >
