@@ -1,41 +1,19 @@
-import SDK from "@uphold/uphold-sdk-javascript";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ConvertedCurrenciesList } from "./components/ConvertedCurrenciesList/ConvertedCurrenciesList";
 import { CurrencyInput } from "./components/CurrencyInput/CurrencyInput";
 import { Navbar } from "./components/Navbar/Navbar";
-import { CurrencyData, SupportedCurrency } from "./types";
-
-const USD = {
-  code: "USD",
-  features: ["buy", "deposit", "sell", "transfer", "withdraw"],
-  formatting: {
-    decimal: ".",
-    format: "__symbol__ __value__ __code__",
-    grouping: ",",
-    precision: 2,
-  },
-  image: "https://cdn.uphold.com/assets/USD.svg",
-  name: "US Dollar",
-  shortName: "USD",
-  status: "open",
-  symbol: "$",
-  type: "fiat",
-} as SupportedCurrency;
-
-const sdk = new SDK({
-  baseUrl: "http://api-sandbox.uphold.com",
-  clientId: process.env.REACT_APP_SDK_CLIENT_ID ?? "",
-  clientSecret: process.env.REACT_APP_SDK_CLIENT_SECRET ?? "",
-});
+import { SupportedCurrency, setCurrencies } from "./slices/supportedCurrencies";
+import { RootState } from "./store";
 
 function App() {
-  const [currencyAmount, setCurrencyAmount] = useState(0);
-  const [selectedCurrency, setSelectedCurrency] = useState(USD);
-  const [supportedCurrencies, setSupportedCurrencies] = useState<
-    SupportedCurrency[]
-  >([]);
-  const [tickerData, setTickerData] = useState<CurrencyData[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const selectedCurrency = useSelector(
+    (state: RootState) => state.selectedCurrency.currency
+  );
+  const supportedCurrencies = useSelector(
+    (state: RootState) => state.supportedCurrencies.currencies
+  );
+  const dispatch = useDispatch();
 
   const getSupportedCurrencies = async () => {
     const fullData: SupportedCurrency[] = [];
@@ -55,47 +33,14 @@ function App() {
       index++;
     }
 
-    console.log(fullData.find((cur) => cur.code === "USD"));
     return fullData;
   };
 
   const getRates = async () => {
-    if (supportedCurrencies.length === 0) {
+    if (supportedCurrencies.length <= 1) {
       const currencies: SupportedCurrency[] = await getSupportedCurrencies();
-      setSupportedCurrencies(currencies);
+      dispatch(setCurrencies(currencies));
     }
-
-    /* const cachedCurrencyData = localStorage.getItem(selectedCurrency.code);
-
-    if (cachedCurrencyData) {
-      const currencyData: CurrencyData[] = JSON.parse(cachedCurrencyData);
-      setTickerData(currencyData);
-    }
-    //if currency is cached no need to set loading
-    else if (currencyAmount) {
-      setIsLoading(true);
-    }
-
-    const newCurrencyData: CurrencyData[] = await sdk.getTicker(
-      selectedCurrency.code
-    );
-
-    // filtering to get only one-way rates (selected-anything)
-    const filteredRates = newCurrencyData.filter(
-      (ticker) => ticker.currency === selectedCurrency.code
-    );
-
-    if (!cachedCurrencyData) setTickerData(filteredRates);
-
-    localStorage.setItem(selectedCurrency.code, JSON.stringify(filteredRates));
-
-    if (supportedCurrencies.length === 0) {
-      const currencies: SupportedCurrency[] = await getSupportedCurrencies();
-      setSupportedCurrencies(currencies);
-      console.log(currencies.find((cur) => cur.code === "USD"));
-    }
-
-    setIsLoading(false); */
   };
 
   useEffect(() => {
@@ -114,19 +59,8 @@ function App() {
           </h2>
         </div>
         <div className="w-[40vw] ">
-          <CurrencyInput
-            selectedCurrency={selectedCurrency}
-            setSelectedCurrency={setSelectedCurrency}
-            setCurrencyAmount={setCurrencyAmount}
-            supportedCurrencies={supportedCurrencies}
-            setIsLoading={setIsLoading}
-          />
-          <ConvertedCurrenciesList
-            supportedCurrencies={supportedCurrencies}
-            selectedCurrency={selectedCurrency}
-            currencyAmount={currencyAmount}
-            loading={isLoading}
-          />
+          <CurrencyInput />
+          <ConvertedCurrenciesList />
         </div>
       </div>
     </main>

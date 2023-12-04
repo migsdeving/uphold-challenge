@@ -1,40 +1,21 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
-import { SupportedCurrency } from "../../types";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setCurrencyAmount } from "../../slices/currencyAmount";
 import { CurrencySelector } from "../CurrencySelector/CurrencySelector";
-
-interface CurrencyInputProps {
-  selectedCurrency: SupportedCurrency;
-  setSelectedCurrency: Dispatch<SetStateAction<SupportedCurrency>>;
-  supportedCurrencies: SupportedCurrency[];
-  setCurrencyAmount: Dispatch<SetStateAction<number>>;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
-}
 
 const DEBOUNCE_TIME = 500;
 
-export const CurrencyInput = ({
-  selectedCurrency,
-  supportedCurrencies,
-  setSelectedCurrency,
-  setCurrencyAmount,
-  setIsLoading,
-}: CurrencyInputProps) => {
+export const CurrencyInput = () => {
   const [inputAmount, setInputAmount] = useState("");
+  const dispatch = useDispatch();
+
   const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputAmount(e.target.value);
   };
 
   useEffect(() => {
-    setIsLoading(true);
     const timeoutId = setTimeout(() => {
-      setCurrencyAmount(parseFloat(inputAmount));
-      setIsLoading(false);
+      dispatch(setCurrencyAmount(parseFloat(inputAmount)));
     }, DEBOUNCE_TIME);
     return () => clearTimeout(timeoutId);
   }, [inputAmount]);
@@ -49,11 +30,7 @@ export const CurrencyInput = ({
         className="focus:border-none text-5xl bg-transparent outline-none appearance-none"
         onWheel={(e) => e.currentTarget.blur()}
       />
-      <CurrencySelector
-        selectedCurrency={selectedCurrency}
-        supportedCurrencies={supportedCurrencies}
-        setSelectedCurrency={setSelectedCurrency}
-      />
+      <CurrencySelector />
     </div>
   );
 };

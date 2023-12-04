@@ -1,24 +1,27 @@
 // CustomDropdown.tsx
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { SupportedCurrency } from "../../types";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedCurrency } from "../../slices/selectedCurrency";
+import { SupportedCurrency } from "../../slices/supportedCurrencies";
+import { RootState } from "../../store";
 import { CurrencyImage } from "../CurrencyImage/CurrencyImage";
 import { ChevronDown } from "../icons/ChevronDown";
 
-interface CurrencySelectorProps {
-  selectedCurrency: SupportedCurrency;
-  supportedCurrencies: SupportedCurrency[];
-  setSelectedCurrency: Dispatch<SetStateAction<SupportedCurrency>>;
-}
+export const CurrencySelector = () => {
+  const supportedCurrencies = useSelector(
+    (state: RootState) => state.supportedCurrencies.currencies
+  );
 
-export const CurrencySelector = ({
-  selectedCurrency,
-  supportedCurrencies,
-  setSelectedCurrency,
-}: CurrencySelectorProps) => {
+  const selectedCurrency = useSelector(
+    (state: RootState) => state.selectedCurrency.currency
+  );
+
+  const dispatch = useDispatch();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (currency: SupportedCurrency) => {
-    setSelectedCurrency(currency);
+    dispatch(setSelectedCurrency(currency));
     setIsOpen(false);
   };
 
@@ -39,38 +42,6 @@ export const CurrencySelector = ({
       document.removeEventListener("click", checkIfClickedOutside);
     };
   }, [isOpen]);
-
-  /*   const Popup = memo(function Popup({
-    supportedCurrencies,
-  }: {
-    supportedCurrencies: SupportedCurrency[];
-  }) {
-    return (
-      <div
-        ref={popupRef}
-        className="shadow-2xl rounded-lg no-scrollbar origin-top-right absolute right-0 mt-1 w-40 h-[210px] overflow-auto bg-white z-40"
-        role="menu"
-        aria-orientation="vertical"
-        aria-labelledby="options-menu"
-      >
-        <div className="">
-          {supportedCurrencies
-            .filter((currency) => currency.code !== selectedCurrency.code)
-            .map((currency, index) => (
-              <div
-                key={index}
-                className="flex flex-row px-3 py-2 m-1 rounded-md items-center cursor-pointer hover:bg-slate-200"
-                role="menuitem"
-                onClick={() => handleSelect(currency)}
-              >
-                <CurrencyImage src={currency.image} />
-                <span className="ml-3">{currency.code}</span>
-              </div>
-            ))}
-        </div>
-      </div>
-    );
-  }); */
 
   return (
     <div className="relative">
