@@ -72,20 +72,22 @@ export const CurrencySelector = () => {
           aria-orientation="vertical"
           aria-labelledby="options-menu"
         >
-          <div className="">
-            {supportedCurrencies
-              .filter((currency) => currency.code !== selectedCurrency.code)
-              .map((currency, index) => (
-                <div
-                  key={index}
-                  className="flex flex-row px-3 py-2 m-1 rounded-md items-center cursor-pointer hover:bg-slate-200"
-                  role="menuitem"
-                  onClick={() => handleSelect(currency)}
-                >
-                  <CurrencyImage src={currency.image} />
-                  <span className="ml-3">{currency.code}</span>
-                </div>
-              ))}
+          <div className="scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-slate-300 overflow-y-scroll h-full">
+            <div className="">
+              {supportedCurrencies
+                .filter((currency) => currency.code !== selectedCurrency.code)
+                .map((currency, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-row px-3 py-2 m-1 rounded-md items-center cursor-pointer hover:bg-slate-200"
+                    role="menuitem"
+                    onClick={() => handleSelect(currency)}
+                  >
+                    <CurrencyImage src={currency.image} />
+                    <span className="ml-3">{currency.code}</span>
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
       )}

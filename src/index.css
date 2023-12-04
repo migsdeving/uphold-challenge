@@ -10,19 +10,6 @@
   }
 }
 
-@layer utilities {
-  @variants responsive {
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .no-scrollbar {
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
-    }
-  }
-}
-
 body {
   margin: 0;
   font-family: proxima-nova, "Helvetica Neue", Helvetica, Arial, sans-serif;

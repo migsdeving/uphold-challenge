@@ -66,15 +66,17 @@ export const ConvertedCurrenciesList = () => {
       {isLoading ? (
         <ExchangeRateCardSkeleton />
       ) : supportedCurrencies.length > 0 && !!currencyAmount ? (
-        <div className="flex flex-col h-[70vh] w-full overflow-auto no-scrollbar">
-          {supportedCurrencies.map((currency, index) => {
-            const rate = getCurrencyRate(currency);
-            return rate ? (
-              <ExchangeRateCard key={index} rate={rate} currency={currency} />
-            ) : (
-              <></>
-            );
-          })}
+        <div className="flex flex-col h-[70vh] w-full overflow-auto">
+          <div className="scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-slate-300 overflow-y-scroll h-full">
+            {supportedCurrencies.map((currency, index) => {
+              const rate = getCurrencyRate(currency);
+              return rate ? (
+                <ExchangeRateCard key={index} rate={rate} currency={currency} />
+              ) : (
+                <></>
+              );
+            })}
+          </div>
         </div>
       ) : (
         "Enter an amount to check the rates."
