@@ -5,7 +5,7 @@ import { USDMock, mockSupportedCurrencies } from "../../mocks/mocks";
 import { ConvertedCurrenciesList } from "./ConvertedCurrenciesList";
 
 it("Should render the list of currencies", () => {
-  renderWithProviders(<ConvertedCurrenciesList />, {
+  renderWithProviders(<ConvertedCurrenciesList itemsPerPage={100} />, {
     preloadedState: {
       supportedCurrencies: { currencies: mockSupportedCurrencies },
       currencyAmount: { value: 10 },
@@ -20,7 +20,7 @@ it("Should render the list of currencies", () => {
 });
 
 it("Should not show the list of currencies when theres no input", () => {
-  renderWithProviders(<ConvertedCurrenciesList />, {
+  renderWithProviders(<ConvertedCurrenciesList itemsPerPage={100} />, {
     preloadedState: {
       supportedCurrencies: { currencies: mockSupportedCurrencies },
       conversionRates: { rates: { USD: USDMock } },

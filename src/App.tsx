@@ -64,7 +64,7 @@ function App() {
         </div>
         <div className="w-[40vw] ">
           <CurrencyInput />
-          <ConvertedCurrenciesList />
+          <ConvertedCurrenciesList itemsPerPage={30} />
         </div>
       </div>
     </main>
