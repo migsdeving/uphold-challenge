@@ -52,7 +52,6 @@ export const ConvertedCurrenciesList = ({
 
 		try {
 			const tickers: any[] = await sdk.getTicker(selectedCurrency.code);
-
 			const filteredTickers = tickers.filter(
 				(ticker) => ticker.currency === selectedCurrency.code
 			);
@@ -83,7 +82,7 @@ export const ConvertedCurrenciesList = ({
 				e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight < 10;
 
 			if (bottom) {
-				setPage((prev: number) => prev + 1);
+				setPage((prev) => prev + 1);
 			}
 		}, debounceDelay);
 	};

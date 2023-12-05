@@ -32,8 +32,8 @@ function App() {
 				fullData.push(...data);
 				lastAmountOfCurrencies = data.length;
 				index++;
-			} catch {
-				lastAmountOfCurrencies = 1;
+			} catch (e) {
+				break;
 			}
 		}
 
