@@ -13,5 +13,8 @@
 		"sourceType": "module"
 	},
 	"plugins": ["react"],
-	"rules": {}
+	"ignorePatterns": ["src/reportWebVitals.js", "src/setupProxy.js"],
+	"rules": {
+		"@typescript-eslint/explicit-function-return-type": "off"
+	}
 }

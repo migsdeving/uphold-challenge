@@ -6,7 +6,7 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: "https://api-sandbox.uphold.com", // Specify the target API server
       changeOrigin: true,
-      //pathRewrite: false,
+      // pathRewrite: false,
     })
   );
 };
