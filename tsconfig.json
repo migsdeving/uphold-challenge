@@ -12,7 +12,7 @@
 		"src",
 		"node_modules/cypress",
 		"globals.d.ts",
-		"mocks",
+		"src/mocks",
 		"tailwind.config.js",
 		"coverage"
 	],

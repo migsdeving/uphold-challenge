@@ -1,5 +1,9 @@
 /// <reference types="Cypress"/>
-import { BTCMock, USDMock, mockSupportedCurrencies } from '../../mocks/mocks';
+import {
+	BTCMock,
+	USDMock,
+	mockSupportedCurrencies,
+} from '../../src/mocks/mocks';
 describe('E2E', () => {
 	// and assign an alias
 	it('Completes the full aplication flow', () => {

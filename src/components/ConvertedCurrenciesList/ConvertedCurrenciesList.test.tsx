@@ -1,12 +1,12 @@
 import '@testing-library/jest-dom/extend-expect'; // Import the toBeVisible matcher
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { renderWithProviders } from '../../../mocks/mock-store';
+import { renderWithProviders } from '../../mocks/mock-store';
 import {
 	USDMock,
 	USDlONGMock,
 	mockLongListSupportedCurrencies,
 	mockSupportedCurrencies,
-} from '../../../mocks/mocks';
+} from '../../mocks/mocks';
 import { ConvertedCurrenciesList } from './ConvertedCurrenciesList';
 
 it('Should render the list of currencies', () => {

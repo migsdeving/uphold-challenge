@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
-import { renderWithProviders } from '../../../mocks/mock-store';
-import { USDMock, mockSupportedCurrencies } from '../../../mocks/mocks';
+import { renderWithProviders } from '../../mocks/mock-store';
+import { USDMock, mockSupportedCurrencies } from '../../mocks/mocks';
 import { SupportedCurrency } from '../../slices/supportedCurrencies';
 import { ExchangeRateCard } from './ExchangeRateCard';
 

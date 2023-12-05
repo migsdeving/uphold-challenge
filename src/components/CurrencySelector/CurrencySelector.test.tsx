@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithProviders } from '../../../mocks/mock-store';
-import { mockSupportedCurrencies } from '../../../mocks/mocks';
+import { renderWithProviders } from '../../mocks/mock-store';
+import { mockSupportedCurrencies } from '../../mocks/mocks';
 import { SupportedCurrency } from '../../slices/supportedCurrencies';
 import { CurrencySelector } from './CurrencySelector';
 
