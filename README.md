@@ -1,5 +1,39 @@
 # Frontend Challenge
 
+## Usage
+
+install packages:
+
+```bash
+yarn install
+```
+
+Run the app:
+
+```bash
+yarn start
+```
+
+Run unit tests:
+
+```bash
+yarn test
+```
+
+## Run E2E tests
+
+First run the app
+
+```bash
+yarn start
+```
+
+Then Cypress with
+
+```bash
+yarn e2e
+```
+
 ## Demo
 
 ![Alt text](image-3.png)
