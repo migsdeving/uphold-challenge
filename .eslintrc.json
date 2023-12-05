@@ -13,8 +13,15 @@
 		"sourceType": "module"
 	},
 	"plugins": ["react"],
-	"ignorePatterns": ["src/reportWebVitals.js", "src/setupProxy.js"],
+	"ignorePatterns": ["src/reportWebVitals.js", "src/setupProxy.js", "/build"],
 	"rules": {
-		"@typescript-eslint/explicit-function-return-type": "off"
+		"@typescript-eslint/explicit-function-return-type": "off",
+		"react/react-in-jsx-scope": "off",
+		"react/jsx-uses-react": "off",
+		"@typescript-eslint/consistent-type-imports": "off",
+		"@typescript-eslint/consistent-type-assertions": "off",
+		"@typescript-eslint/no-floating-promises": "off",
+		"@typescript-eslint/strict-boolean-expressions": "off",
+		"@typescript-eslint/no-confusing-void-expression": "off"
 	}
 }

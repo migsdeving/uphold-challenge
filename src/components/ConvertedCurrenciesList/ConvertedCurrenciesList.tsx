@@ -48,7 +48,7 @@ export const ConvertedCurrenciesList = ({
 	};
 
 	const fetchRates = async () => {
-		if (!conversionRates && currencyAmount) setIsLoading(true);
+		if (!conversionRates && !!currencyAmount) setIsLoading(true);
 
 		try {
 			const tickers: any[] = await sdk.getTicker(selectedCurrency.code);
