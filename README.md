@@ -1,70 +1,29 @@
-# Getting Started with Create React App
+# Frontend Challenge
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Demo
 
-## Available Scripts
+![Alt text](image-3.png)
 
-In the project directory, you can run:
+## Summary
 
-### `npm start`
+Every criteria and Technical spec was met in this challenge.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- E2E testing was implemented with Cypress.
+- Caching and state management with Redux Toolkit.
+- Unit tested the components with jest and React Testing Library. (main component App skipped in favor of E2E)
+- CORS is handled with http-proxy-middleware
+- Pagination on the currency conversion list was implemented with a "fake" infinite loading (due to the sdk method not supporting pagination).
+- Supported Currencies are being loaded dinamically with a direct call to the Uphold API (no sdk method).
+- Linting tools with Husky/Prettier/Eslint
+- Loading state only appears for currencies that are not cached already.
+- Responsive design
+- Tailwind for CSS
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### What went wrong ?
 
-### `npm test`
+I wasn't able to mock neither SDK, or the api in the unit tests.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### What I tried
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **MSW server with the API endpoint:** Would not work with Create React App, despite me trying every configuration I could find to make it work. It might be due to the fact that the API needs to be called over http, being redirected to https to then return the response. The tests immeadiatly exited after the sdk call.
+- **Using jest.mock with the sdk constructor**: Would only return undefined despite mocking the promise correctly with correctly formatted data.

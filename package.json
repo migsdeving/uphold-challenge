@@ -24,7 +24,10 @@
 			"<rootDir>/src/reportWebVitals.js",
 			"<rootDir>/src/components/icons/",
 			"<rootDir>/src/slices/",
-			"<rootDir>/src/mocks/"
+			"<rootDir>/src/mocks/",
+			"<rootDir>/src/App.tsx",
+			"<rootDir>/src/setupProxy.js",
+			"<rootDir>/src/utils.ts"
 		]
 	},
 	"scripts": {
