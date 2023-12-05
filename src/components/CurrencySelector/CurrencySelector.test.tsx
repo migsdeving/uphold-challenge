@@ -65,8 +65,6 @@ it("Should close the select menu when clicking outside it", () => {
   const selectButton = screen.getByRole("button");
   expect(selectButton).toBeVisible();
 
-  console.log(selectButton.textContent);
-
   userEvent.click(selectButton);
 
   const selectMenu = screen.getByRole("menu");

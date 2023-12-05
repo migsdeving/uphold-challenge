@@ -71,8 +71,6 @@ export const ConvertedCurrenciesList = ({
     setPage(1);
   }, [selectedCurrency]);
 
-  console.log(supportedCurrencies.slice(0, page * itemsPerPage));
-
   const handleInfiniteLoading = (e: any) => {
     const debounceDelay = 500;
 
